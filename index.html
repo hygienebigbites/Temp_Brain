@@ -221,6 +221,27 @@ th{position:sticky;top:0;background:#1a2a3c;color:var(--ink-2);font-weight:600}
 .steps{margin:10px 0 0;padding-left:20px;color:var(--ink-2);font-size:14px}
 .steps li{margin:3px 0}
 code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12.5px;background:var(--soft);border-radius:6px;padding:0 5px}
+
+/* alarm */
+.alarm{position:fixed;left:max(10px,env(safe-area-inset-left,0px));right:max(10px,env(safe-area-inset-right,0px));top:max(10px,env(safe-area-inset-top,0px));z-index:40;max-width:620px;margin:0 auto;background:#b3202a;color:#fff;border:1px solid rgba(255,255,255,.45);border-radius:22px;padding:14px 16px;box-shadow:0 10px 40px rgba(0,0,0,.45);animation:almpulse 1.1s ease-in-out infinite}
+@keyframes almpulse{0%,100%{box-shadow:0 10px 40px rgba(0,0,0,.45),0 0 0 0 rgba(255,107,90,.7)}50%{box-shadow:0 10px 40px rgba(0,0,0,.45),0 0 0 10px rgba(255,107,90,0)}}
+.alarm .am{display:flex;gap:12px;align-items:center}
+.alarm .am svg{width:34px;height:34px;flex:none}
+.alarm .am b{display:block;font-size:18px;line-height:1.2}
+.alarm .am span{font-size:14px;opacity:.95}
+.alarm .ab{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.alarm button{font:inherit;font-size:14px;font-weight:700;border-radius:999px;border:1px solid #fff;background:#fff;color:#8f1119;padding:9px 16px;cursor:pointer}
+.alarm button.ghost{background:transparent;color:#fff}
+.alarm p{margin:10px 0 0;font-size:13.5px;font-weight:600;background:rgba(0,0,0,.25);border-radius:12px;padding:7px 10px}
+button.pill{font:inherit;font-size:12.5px;font-weight:600;cursor:pointer}
+.pill.alm-on{color:var(--good)} .pill.alm-wait{color:var(--warn)} .pill.alm-ring{background:#b3202a;color:#fff;border-color:#fff}
+.sec{grid-column:1/-1;margin:6px 0 -4px;font-size:13px;font-weight:700;color:var(--ink);letter-spacing:.02em;border-top:1px solid var(--line);padding-top:14px}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chipbtn{font:inherit;font-size:14px;font-weight:700;color:#fff;background:var(--soft-2);border:1px solid var(--line);border-radius:999px;padding:7px 15px;cursor:pointer;text-transform:none;letter-spacing:0}
+.chipbtn[aria-pressed="true"]{background:#fff;color:#0b1520}
+.check{display:flex;align-items:center;gap:10px;font-size:15px;color:var(--ink);text-transform:none;letter-spacing:0;flex-direction:row}
+.check input{width:20px;height:20px;flex:none;accent-color:#fff;padding:0}
+.field input[type=range]{padding:0;height:28px;accent-color:#fff}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 </head>
@@ -242,6 +263,7 @@ code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12.5px;backgrou
     <symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-4.5"/></symbol>
     <symbol id="i-thermo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M10 14V5a2 2 0 1 1 4 0v9a4 4 0 1 1-4 0z"/></symbol>
     <symbol id="i-gear" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M18.7 5.3l-2.1 2.1M7.4 16.6l-2.1 2.1"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 17V11a6 6 0 0 1 12 0v6l1.5 2h-15zM10 21a2 2 0 0 0 4 0"/></symbol>
     <symbol id="i-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></symbol>
     <symbol id="i-rupee" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4h12M6 9h12M9 4c5 0 7 2 7 5s-2 5-7 5l7 6"/></symbol>
     <symbol id="i-wifi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M2.5 9a14 14 0 0 1 19 0M5.5 12.5a9.5 9.5 0 0 1 13 0M8.7 16a5 5 0 0 1 6.6 0"/><circle cx="12" cy="19.2" r="1" fill="currentColor"/></symbol>
@@ -268,6 +290,12 @@ code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12.5px;backgrou
   <div class="frost"></div>
   <canvas id="fx"></canvas>
   <div class="flash" id="flash"></div>
+</div>
+
+<div class="alarm" id="alarm" role="alert" hidden>
+  <div class="am"><svg aria-hidden="true"><use href="#i-bell"/></svg><div><b id="almTitle"></b><span id="almSub"></span></div></div>
+  <div class="ab"><button id="almS15" type="button">Silence 15 min</button><button id="almS60" class="ghost" type="button">Silence 1 h</button><button id="almSet" class="ghost" type="button">Alarm settings</button></div>
+  <p id="almTap" hidden>Tap anywhere on the screen to turn the sound on</p>
 </div>
 
 <div class="layout">
@@ -373,6 +401,22 @@ code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12.5px;backgrou
       <label class="field wide">Ignore readings before<input id="startFrom" type="datetime-local"></label>
       <label class="field">Compressor power (W)<input id="watts" type="number" step="10" min="0"></label>
       <label class="field">Tariff (₹ per kWh)<input id="tariff" type="number" step="0.5" min="0"></label>
+      <div class="sec">Alarm sound for this unit</div>
+      <label class="field wide check"><input type="checkbox" id="almOn"> Ring when the temperature goes out of range</label>
+      <div class="field wide">Alarm when above (°C)
+        <div class="chips" id="almChips"><button class="chipbtn" type="button" data-v="5">5</button><button class="chipbtn" type="button" data-v="8">8</button><button class="chipbtn" type="button" data-v="12">12</button><button class="chipbtn" type="button" data-v="-18">−18</button></div>
+      </div>
+      <label class="field">Or type your own<input id="almHi" type="number" step="0.5" inputmode="decimal"></label>
+      <label class="field">Also when below (optional)<input id="almLo" type="number" step="0.5" inputmode="decimal" placeholder="off"></label>
+      <label class="field wide">Wait before ringing
+        <select id="almDelay"><option value="0">Immediately</option><option value="5">5 minutes</option><option value="10">10 minutes</option><option value="15">15 minutes</option><option value="30">30 minutes</option></select>
+      </label>
+      <label class="field">Sound<select id="almSound"><option value="siren">Siren</option><option value="beep">Beep beep</option></select></label>
+      <label class="field">Volume<input id="almVol" type="range" min="10" max="100" step="5"></label>
+      <label class="field wide check"><input type="checkbox" id="almOffline"> Also ring if the logger stops sending</label>
+      <label class="field wide check"><input type="checkbox" id="almKeep"> Keep this screen awake while Temp Brain is open</label>
+      <div class="field wide" style="flex-direction:row;gap:10px;flex-wrap:wrap"><button class="btn" id="almTest" type="button">Test sound</button><button class="btn" id="almNotif" type="button">Allow phone alerts</button></div>
+      <div class="sec">Display</div>
       <label class="field wide">Preview a theme
         <select id="scenePick"><option value="auto">Automatic, follows the unit</option><option value="chill">Cold and steady</option><option value="warm">Running warm</option><option value="storm">Out of range</option><option value="fog">Offline</option></select>
       </label>
@@ -916,8 +960,10 @@ function renderAll(){
   st.push(MODE === 'live' ? '<span class="pill ' + (online ? 'good' : 'bad') + '">' + (online ? '● Online' : '▲ Offline') + '</span>' : '<span class="pill warn">▲ Demo data</span>');
   st.push('<span class="pill">' + icon('thermo') + PROFILES[P.key].name + ' · ' + P.lo + ' to ' + P.hi + ' °C</span>');
   st.push('<span class="pill">' + icon('clock') + (lastSeenMin < 1 ? 'just now' : dur(lastSeenMin) + ' ago') + '</span>');
+  st.push('<button class="pill" id="almPill" type="button"></button>');
   if (MODE === 'live') st.push('<span class="pill" id="countdown">Refresh in ' + CONFIG.REFRESH_SECONDS + ' s</span>');
   $('status').innerHTML = st.join('');
+  fillAlarmUI(P); updateAlarmPill();
 
   if (!d.valid.length){
     $('temp').innerHTML = '<span class="i">--</span>';
@@ -1068,11 +1114,164 @@ function renderAll(){
   $('foot').textContent = 'Times are Indian Standard Time. Figures weight each reading by the time it covers, so quick restarts do not count twice. ' + (MODE === 'live' ? 'Last loaded ' + hhmm(LAST_LOAD + 19800000) + '.' : '');
 }
 
+
+/* ---------------- alarm ---------------- */
+const AUD = {ctx: null, osc: null, gain: null, timer: null, armed: false, lock: null};
+const SNZ = {};
+const AL = {key: '', ringing: [], all: [], title: document.title, flashT: 0, vibT: 0};
+const alm = {
+  get(dev){
+    const P = profileFor(dev), hi = parseFloat(store.get('alm.hi.' + dev, '')), lo = parseFloat(store.get('alm.lo.' + dev, ''));
+    return {on: store.get('alm.on.' + dev, '1') === '1', hi: isNaN(hi) ? P.hi : hi, lo: isNaN(lo) ? null : lo, delay: parseInt(store.get('alm.delay.' + dev, '10'), 10) || 0, offline: store.get('alm.offline', '1') === '1'};
+  }
+};
+function snoozeOf(dev){ if (!(dev in SNZ)) SNZ[dev] = parseInt(store.get('alm.snz.' + dev, '0'), 10) || 0; return SNZ[dev]; }
+function setSnooze(dev, ts){ SNZ[dev] = ts; store.set('alm.snz.' + dev, String(ts)); }
+function armAudio(){
+  try {
+    if (!AUD.ctx) AUD.ctx = new (window.AudioContext || window.webkitAudioContext)();
+    if (AUD.ctx.state === 'suspended') AUD.ctx.resume();
+    AUD.armed = true;
+  } catch (e) {}
+  keepAwake();
+  syncSound(); updateAlarmPill();
+}
+async function keepAwake(){
+  try {
+    if (store.get('alm.keep', '1') !== '1' || !navigator.wakeLock || AUD.lock || document.hidden) return;
+    AUD.lock = await navigator.wakeLock.request('screen');
+    AUD.lock.addEventListener('release', () => { AUD.lock = null; });
+  } catch (e) { AUD.lock = null; }
+}
+function startSound(){
+  stopSound();
+  const c = AUD.ctx; if (!c || c.state !== 'running') return false;
+  const kind = store.get('alm.sound', 'siren'), vol = Math.max(.1, Math.min(1, (parseInt(store.get('alm.vol', '80'), 10) || 80) / 100)) * .55;
+  AUD.gain = c.createGain(); AUD.gain.gain.value = 0; AUD.gain.connect(c.destination);
+  AUD.osc = c.createOscillator(); AUD.osc.type = kind === 'siren' ? 'sawtooth' : 'square'; AUD.osc.connect(AUD.gain); AUD.osc.start();
+  let n = 0;
+  const tick = () => {
+    const now = c.currentTime;
+    if (kind === 'siren'){ AUD.osc.frequency.setTargetAtTime(n % 2 ? 640 : 980, now, .04); AUD.gain.gain.setTargetAtTime(vol, now, .02); }
+    else { AUD.osc.frequency.setValueAtTime(1050, now); AUD.gain.gain.setTargetAtTime(n % 2 ? 0 : vol, now, .008); }
+    n++;
+  };
+  tick(); AUD.timer = setInterval(tick, kind === 'siren' ? 520 : 240);
+  return true;
+}
+function stopSound(){
+  clearInterval(AUD.timer); AUD.timer = null;
+  try { if (AUD.osc){ AUD.osc.stop(); AUD.osc.disconnect(); } if (AUD.gain) AUD.gain.disconnect(); } catch (e) {}
+  AUD.osc = null; AUD.gain = null;
+}
+function syncSound(){
+  if (AL.ringing.length){ if (AUD.armed && !AUD.osc) startSound(); } else if (AUD.osc && !AUD.testing) stopSound();
+  $('almTap').hidden = !(AL.ringing.length && !(AUD.armed && AUD.ctx && AUD.ctx.state === 'running'));
+}
+function alarmEval(dev){
+  const c = alm.get(dev); if (!c.on) return null;
+  const rows = ALL.filter(r => r.dev === dev && r.v !== null); if (!rows.length) return null;
+  const last = rows[rows.length - 1], age = (nowRef - last.t) / MIN;
+  if (age > CONFIG.STALE_MINUTES) return c.offline ? {kind: 'offline', title: dev + ': logger silent', sub: 'No reading for ' + dur(age) + '. Check power and Wi-Fi at the unit.', min: age} : null;
+  const hi = last.v > c.hi, lo = c.lo !== null && last.v < c.lo;
+  if (!hi && !lo) return null;
+  let i = rows.length - 1;
+  while (i > 0 && rows[i].t - rows[i - 1].t <= GAP_MS && (hi ? rows[i - 1].v > c.hi : rows[i - 1].v < c.lo)) i--;
+  const since = Math.max(0, (nowRef - rows[i].t) / MIN);
+  if (since < c.delay) return null;
+  return {kind: hi ? 'high' : 'low', title: dev + ' ' + f1(last.v) + ' °C', sub: (hi ? 'Above ' + c.hi : 'Below ' + c.lo) + ' °C for ' + dur(since) + '.', min: since};
+}
+function checkAlarms(){
+  const now = Date.now(), all = [];
+  if (MODE === 'live') devices().forEach(dev => {
+    const e = alarmEval(dev);
+    if (!e){ if (snoozeOf(dev)) setSnooze(dev, 0); return; }
+    e.dev = dev; e.snoozed = snoozeOf(dev) > now; all.push(e);
+  });
+  AL.all = all; AL.ringing = all.filter(e => !e.snoozed);
+  const key = AL.ringing.map(e => e.dev + e.kind).join('|');
+  if (key !== AL.key){
+    const fresh = AL.ringing.length && AL.ringing.some(e => !AL.key.includes(e.dev + e.kind));
+    AL.key = key;
+    if (fresh) onAlarmStart();
+  }
+  const box = $('alarm');
+  box.hidden = !AL.ringing.length;
+  if (AL.ringing.length){
+    const e = AL.ringing[0];
+    $('almTitle').textContent = (AL.ringing.length > 1 ? AL.ringing.length + ' alarms · ' : 'ALARM · ') + e.title;
+    $('almSub').textContent = e.sub;
+  }
+  if (AL.ringing.length && !AL.flashT){
+    let on = false; AL.flashT = setInterval(() => { on = !on; document.title = on ? '🚨 ALARM · ' + AL.ringing[0].title : AL.title; }, 900);
+  }
+  if (!AL.ringing.length && AL.flashT){ clearInterval(AL.flashT); AL.flashT = 0; document.title = AL.title; }
+  syncSound(); updateAlarmPill();
+}
+function onAlarmStart(){
+  try { if (navigator.vibrate) navigator.vibrate([400, 200, 400, 200, 400]); } catch (e) {}
+  try { if (document.hidden && window.Notification && Notification.permission === 'granted') new Notification('Temp Brain alarm', {body: AL.ringing[0].title + '. ' + AL.ringing[0].sub, requireInteraction: true}); } catch (e) {}
+}
+function silence(min){
+  const until = Date.now() + min * 60000;
+  AL.ringing.forEach(e => setSnooze(e.dev, until));
+  checkAlarms();
+}
+function updateAlarmPill(){
+  const b = $('almPill'); if (!b) return;
+  const dev = state.dev, c = alm.get(dev);
+  const ring = AL.ringing.length, snz = AL.all.find(e => e.snoozed);
+  let cls = 'pill', txt;
+  if (!c.on){ txt = 'Alarm off'; }
+  else if (ring){ cls += ' alm-ring'; txt = 'Ringing'; }
+  else if (snz){ cls += ' alm-wait'; const d = new Date(snoozeOf(snz.dev) + 19800000); txt = 'Silenced until ' + pad(d.getUTCHours()) + ':' + pad(d.getUTCMinutes()); }
+  else if (!AUD.armed){ cls += ' alm-wait'; txt = 'Alarm above ' + c.hi + '° · tap to turn sound on'; }
+  else { cls += ' alm-on'; txt = 'Alarm above ' + c.hi + '° · sound on'; }
+  b.className = cls; b.innerHTML = icon('bell') + txt;
+}
+function setVal(el, v){ if (el !== document.activeElement) el.value = v; }
+function fillAlarmUI(P){
+  const c = alm.get(state.dev);
+  $('almOn').checked = c.on; setVal($('almHi'), c.hi); setVal($('almLo'), c.lo === null ? '' : c.lo);
+  $('almDelay').value = String(c.delay);
+  $('almSound').value = store.get('alm.sound', 'siren'); $('almVol').value = store.get('alm.vol', '80');
+  $('almOffline').checked = c.offline; $('almKeep').checked = store.get('alm.keep', '1') === '1';
+  document.querySelectorAll('#almChips .chipbtn').forEach(b => b.setAttribute('aria-pressed', String(parseFloat(b.dataset.v) === c.hi)));
+  const ok = window.Notification && Notification.permission === 'granted';
+  $('almNotif').textContent = ok ? 'Phone alerts allowed' : 'Allow phone alerts';
+  $('almNotif').hidden = !window.Notification;
+}
+function bindAlarm(){
+  const dev = () => state.dev;
+  const upd = () => { checkAlarms(); fillAlarmUI(); };
+  $('almOn').addEventListener('change', e => { store.set('alm.on.' + dev(), e.target.checked ? '1' : '0'); armAudio(); upd(); });
+  document.querySelectorAll('#almChips .chipbtn').forEach(b => b.addEventListener('click', () => { store.set('alm.hi.' + dev(), b.dataset.v); armAudio(); upd(); }));
+  $('almHi').addEventListener('input', e => { const v = parseFloat(e.target.value); if (!isNaN(v)){ store.set('alm.hi.' + dev(), String(v)); checkAlarms(); updateAlarmPill(); } });
+  $('almLo').addEventListener('input', e => { const v = parseFloat(e.target.value); store.set('alm.lo.' + dev(), isNaN(v) ? '' : String(v)); checkAlarms(); });
+  $('almDelay').addEventListener('change', e => { store.set('alm.delay.' + dev(), e.target.value); upd(); });
+  $('almSound').addEventListener('change', e => { store.set('alm.sound', e.target.value); if (AUD.osc) startSound(); });
+  $('almVol').addEventListener('input', e => { store.set('alm.vol', e.target.value); if (AUD.osc) startSound(); });
+  $('almOffline').addEventListener('change', e => { store.set('alm.offline', e.target.checked ? '1' : '0'); upd(); });
+  $('almKeep').addEventListener('change', e => { store.set('alm.keep', e.target.checked ? '1' : '0'); if (e.target.checked) keepAwake(); else if (AUD.lock){ try { AUD.lock.release(); } catch (x) {} AUD.lock = null; } });
+  $('almTest').addEventListener('click', () => {
+    armAudio(); AUD.testing = true;
+    if (startSound()) setTimeout(() => { AUD.testing = false; if (!AL.ringing.length) stopSound(); }, 2200); else AUD.testing = false;
+  });
+  $('almNotif').addEventListener('click', async () => { try { await Notification.requestPermission(); } catch (e) {} fillAlarmUI(); });
+  $('almS15').addEventListener('click', () => silence(15));
+  $('almS60').addEventListener('click', () => silence(60));
+  $('almSet').addEventListener('click', () => { $('sheet').hidden = false; });
+  document.addEventListener('pointerdown', armAudio, {passive: true});
+  document.addEventListener('keydown', armAudio);
+  document.addEventListener('click', e => { if (e.target.closest('#almPill')){ if (!AUD.armed) armAudio(); else { $('sheet').hidden = false; } } });
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) keepAwake(); });
+}
+
 /* ---------------- wiring ---------------- */
 async function reload(){
   await loadData();
   nowRef = MODE === 'live' ? Date.now() + 19800000 : ALL.reduce((a, r) => Math.max(a, r.t), 0) + MIN;
-  renderAll();
+  renderAll(); checkAlarms();
 }
 $('dev').addEventListener('change', e => { state.dev = e.target.value; renderAll(); });
 $('profile').addEventListener('change', e => { store.set('profile.' + state.dev, e.target.value); renderAll(); });
@@ -1104,12 +1303,13 @@ document.addEventListener('click', e => { const a = e.target.closest('[data-jump
 let rt; window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(renderAll, 140); });
 let left = CONFIG.REFRESH_SECONDS;
 setInterval(() => {
-  if (document.hidden || MODE !== 'live') return;
+  if (MODE === 'live' && AL.all.some(e => e.snoozed)) checkAlarms();
+  if (MODE !== 'live') return;   // keep refreshing even in a background tab so the alarm can still ring
   left--; const c = $('countdown'); if (c) c.textContent = 'Refresh in ' + Math.max(left, 0) + ' s';
   if (left <= 0){ left = CONFIG.REFRESH_SECONDS; reload(); }
 }, 1000);
 document.addEventListener('visibilitychange', () => { if (!document.hidden && MODE === 'live') reload(); });
-fxSize(); reload();
+bindAlarm(); fxSize(); reload();
 </script>
 </body>
 </html>
